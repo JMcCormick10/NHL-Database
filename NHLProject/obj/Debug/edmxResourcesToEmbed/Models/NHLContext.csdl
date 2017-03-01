@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NHLContextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Conference">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Divisions" Relationship="Self.FK_Divisions_ToTable" FromRole="Conferences" ToRole="Divisions" />
+    <NavigationProperty Name="Teams" Relationship="Self.FK_Teams_ToTable" FromRole="Conferences" ToRole="Teams" />
+  </EntityType>
+  <EntityType Name="Division">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Conference_Id" Type="Int32" />
+    <NavigationProperty Name="Conference" Relationship="Self.FK_Divisions_ToTable" FromRole="Divisions" ToRole="Conferences" />
+    <NavigationProperty Name="Teams" Relationship="Self.FK_Teams_ToTable_1" FromRole="Divisions" ToRole="Teams" />
+  </EntityType>
+  <EntityType Name="Player">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Goals" Type="Int32" />
+    <Property Name="Assists" Type="Int32" />
+    <Property Name="Salary" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Team_Id" Type="Int32" />
+    <NavigationProperty Name="Team" Relationship="Self.FK_Players_ToTable" FromRole="Players" ToRole="Teams" />
+  </EntityType>
+  <EntityType Name="Retired_Players">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Goals" Type="Int32" />
+    <Property Name="Assists" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Team_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Team">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Points" Type="Int32" />
+    <Property Name="Conference_Id" Type="Int32" />
+    <Property Name="Division_Id" Type="Int32" />
+    <NavigationProperty Name="Conference" Relationship="Self.FK_Teams_ToTable" FromRole="Teams" ToRole="Conferences" />
+    <NavigationProperty Name="Division" Relationship="Self.FK_Teams_ToTable_1" FromRole="Teams" ToRole="Divisions" />
+    <NavigationProperty Name="Players" Relationship="Self.FK_Players_ToTable" FromRole="Teams" ToRole="Players" />
+  </EntityType>
+  <Association Name="FK_Divisions_ToTable">
+    <End Role="Conferences" Type="Self.Conference" Multiplicity="0..1" />
+    <End Role="Divisions" Type="Self.Division" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Conferences">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Divisions">
+        <PropertyRef Name="Conference_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_ToTable">
+    <End Role="Conferences" Type="Self.Conference" Multiplicity="0..1" />
+    <End Role="Teams" Type="Self.Team" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Conferences">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Teams">
+        <PropertyRef Name="Conference_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_ToTable_1">
+    <End Role="Divisions" Type="Self.Division" Multiplicity="0..1" />
+    <End Role="Teams" Type="Self.Team" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Divisions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Teams">
+        <PropertyRef Name="Division_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Players_ToTable">
+    <End Role="Teams" Type="Self.Team" Multiplicity="0..1" />
+    <End Role="Players" Type="Self.Player" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teams">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Players">
+        <PropertyRef Name="Team_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NHLContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Conferences" EntityType="Self.Conference" />
+    <EntitySet Name="Divisions" EntityType="Self.Division" />
+    <EntitySet Name="Players" EntityType="Self.Player" />
+    <EntitySet Name="Retired_Players" EntityType="Self.Retired_Players" />
+    <EntitySet Name="Teams" EntityType="Self.Team" />
+    <AssociationSet Name="FK_Divisions_ToTable" Association="Self.FK_Divisions_ToTable">
+      <End Role="Conferences" EntitySet="Conferences" />
+      <End Role="Divisions" EntitySet="Divisions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_ToTable" Association="Self.FK_Teams_ToTable">
+      <End Role="Conferences" EntitySet="Conferences" />
+      <End Role="Teams" EntitySet="Teams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_ToTable_1" Association="Self.FK_Teams_ToTable_1">
+      <End Role="Divisions" EntitySet="Divisions" />
+      <End Role="Teams" EntitySet="Teams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Players_ToTable" Association="Self.FK_Players_ToTable">
+      <End Role="Teams" EntitySet="Teams" />
+      <End Role="Players" EntitySet="Players" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

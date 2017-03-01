@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NHLContextModelStoreContainer" CdmEntityContainer="NHLContext">
+    <EntitySetMapping Name="Conferences">
+      <EntityTypeMapping TypeName="NHLContextModel.Conference">
+        <MappingFragment StoreEntitySet="Conferences">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Divisions">
+      <EntityTypeMapping TypeName="NHLContextModel.Division">
+        <MappingFragment StoreEntitySet="Divisions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Conference_Id" ColumnName="Conference_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="NHLContextModel.Player">
+        <MappingFragment StoreEntitySet="Players">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Goals" ColumnName="Goals" />
+          <ScalarProperty Name="Assists" ColumnName="Assists" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="Team_Id" ColumnName="Team_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Retired_Players">
+      <EntityTypeMapping TypeName="NHLContextModel.Retired_Players">
+        <MappingFragment StoreEntitySet="Retired_Players">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Goals" ColumnName="Goals" />
+          <ScalarProperty Name="Assists" ColumnName="Assists" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Team_Name" ColumnName="Team_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="NHLContextModel.Team">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="Conference_Id" ColumnName="Conference_Id" />
+          <ScalarProperty Name="Division_Id" ColumnName="Division_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
